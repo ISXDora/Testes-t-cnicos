@@ -15,7 +15,7 @@ export class Diastolic_Pressure {
 
     @ManyToOne(() => Health_Metric)
     @JoinColumn({name: "health_metrics_id"})
-    user: Health_Metric;
+    metric: Health_Metric;
 
     @CreateDateColumn()
     created_at: Date;

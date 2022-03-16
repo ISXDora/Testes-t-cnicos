@@ -1,8 +1,10 @@
 import {Router} from 'express'
 import { CreateBpmController } from './controllers/CreateBpmController'
+import { CreateDiastolicPressureController } from './controllers/CreateDiastolicPressureController'
 import { CreateHealthMetricsController } from './controllers/CreateHealthMetricsController'
 import { CreateUserController } from './controllers/CreateUserController'
 import { GetAllBpmsController } from './controllers/GetAllBpmsController'
+import { GetAllDiastolicPressuresController } from './controllers/GetAllDiastolicPressuresController'
 import { GetAllUsersController } from './controllers/GetAllUsersController'
 import { GetBpmController } from './controllers/GetBpmController'
 import { GetHealthMetricsController } from './controllers/GetHealthMetricsController'
@@ -27,7 +29,8 @@ routes.get('/bpm/:id', new GetBpmController().handle)
 routes.get('/bpms', new GetAllBpmsController().handle)
 
 //Diastolic Pressure Route
-
+routes.post('/diastolic', new CreateDiastolicPressureController().handle)
+routes.get('/diastolic', new GetAllDiastolicPressuresController().handle)
 
 
 
