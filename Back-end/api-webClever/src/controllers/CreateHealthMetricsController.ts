@@ -3,7 +3,7 @@ import { CreateHealthMetricsService } from '../services/CreateHealthMetricsServi
 
 export class CreateHealthMetricsController {
     async handle(request: Request, response: Response){
-        const {user_id, measurement_date, created_at, updated_at } = request.body
+        const {user_id, measurement_date} = request.body
 
         const service = new CreateHealthMetricsService();
 

@@ -29,6 +29,7 @@ export class CreateHealthMetrics1647299419912 implements MigrationInterface {
                 {
                     name: "updated_at",
                     type: "timestamp",
+                    default: "now()"
                 }
             ],
             foreignKeys: [
