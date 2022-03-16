@@ -13,7 +13,6 @@ export class GetAllDiastolicPressuresController {
             return response.status(400).json(result.message);
         }
 
-        console.log(result)
         return response.status(200).json(result)
     }
 }

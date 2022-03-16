@@ -2,6 +2,7 @@ import {Router} from 'express'
 import { CreateBpmController } from './controllers/CreateBpmController'
 import { CreateDiastolicPressureController } from './controllers/CreateDiastolicPressureController'
 import { CreateHealthMetricsController } from './controllers/CreateHealthMetricsController'
+import { CreateSystolicPressureController } from './controllers/CreateSystolicPressureController'
 import { CreateUserController } from './controllers/CreateUserController'
 import { GetAllBpmsController } from './controllers/GetAllBpmsController'
 import { GetAllDiastolicPressuresController } from './controllers/GetAllDiastolicPressuresController'
@@ -32,7 +33,9 @@ routes.get('/bpms', new GetAllBpmsController().handle)
 routes.post('/diastolic', new CreateDiastolicPressureController().handle)
 routes.get('/diastolic', new GetAllDiastolicPressuresController().handle)
 
-
+//Diastolic Pressure Route
+routes.post('/systolic', new CreateSystolicPressureController().handle)
+routes.get('/systolic', new GetAllDiastolicPressuresController().handle)
 
 
 module.exports = routes 
