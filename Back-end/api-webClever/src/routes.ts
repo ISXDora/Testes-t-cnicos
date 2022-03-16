@@ -1,4 +1,5 @@
 import {Router} from 'express'
+import { CreateBpmController } from './controllers/CreateBpmController'
 import { CreateHealthMetricsController } from './controllers/CreateHealthMetricsController'
 import { CreateUserController } from './controllers/CreateUserController'
 import { GetAllUsersController } from './controllers/GetAllUsersController'
@@ -14,8 +15,12 @@ routes.get('/users', new GetAllUsersController().handle)
 routes.get('/users/:id', new GetUserController().handle) 
 
 //Health Metrics Route
+
 routes.post('/metrics', new CreateHealthMetricsController().handle)
 routes.get('/metrics/:id', new GetHealthMetricsController().handle)
+
+//bpm
+routes.post('/bpm', new CreateBpmController().handle)
 
 
 
