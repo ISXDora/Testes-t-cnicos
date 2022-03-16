@@ -5,16 +5,12 @@ import { User } from "../models/User"
 type HealthMetricsRequest = {
     user_id: string;
     measurement_date: Date;
-    created_at: Date;
-    updated_at: Date;
 }
 
-export class CreateUserService {
+export class CreateHealthMetricsService {
     async execute({
         user_id, 
-        measurement_date, 
-        created_at, 
-        updated_at}:HealthMetricsRequest ): Promise<HealthMetricsRequest | Error> {
+        measurement_date}:HealthMetricsRequest ): Promise<Error | HealthMetricsRequest> {
         
         const repo = getRepository(Health_Metric);
         const repoUser = getRepository(User)
@@ -25,9 +21,7 @@ export class CreateUserService {
 
         const health_metrics = repo.create({
             user_id,
-            measurement_date,
-            created_at,
-            updated_at
+            measurement_date
         })
 
         await repo.save(health_metrics)

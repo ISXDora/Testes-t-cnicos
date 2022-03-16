@@ -12,6 +12,9 @@ export class Health_Metric {
     user: User;
 
     @Column()
+    user_id: string;
+
+    @Column()
     measurement_date: Date;
 
     @CreateDateColumn()
