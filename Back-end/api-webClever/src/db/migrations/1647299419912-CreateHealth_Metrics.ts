@@ -27,7 +27,7 @@ export class CreateHealthMetrics1647299419912 implements MigrationInterface {
                     default: "now()",
                 },
                 {
-                    name: "update_at",
+                    name: "updated_at",
                     type: "timestamp",
                 }
             ],

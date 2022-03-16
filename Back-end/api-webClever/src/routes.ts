@@ -1,6 +1,14 @@
-import {Router, Response, Request} from 'express'
+import {Router} from 'express'
+import { CreateUserController } from './controllers/CreateUserController'
+import { GetAllUsersController } from './controllers/GetAllUsersController'
+import { GetUserController } from './controllers/GetUserController'
 const routes = Router()
 
-routes.get('/user', (request: Request , response: Response) => response.json({title: 'testando json'}))
+
+//Users Route 
+
+routes.post('/users', new CreateUserController().handle) 
+routes.get('/users', new GetAllUsersController().handle) 
+routes.get('/users/:id', new GetUserController().handle) 
 
 module.exports = routes 
