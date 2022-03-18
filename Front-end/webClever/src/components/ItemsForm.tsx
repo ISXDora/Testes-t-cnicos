@@ -9,7 +9,7 @@ export function ItemsForm(props : DivProps){
     return(
     <div className="items">
         <div className="item">
-            <div>{props.name}</div>
+            <div> {props.name} </div>
        </div>
     </div>
     )
