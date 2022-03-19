@@ -32,7 +32,7 @@ body {
 }
 
 body, input, button {
-    font: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 h1{
@@ -45,10 +45,11 @@ h2, button {
 
 button {
     cursor: pointer;
-    [disable]{
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
+}
+
+[disable]{
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 `

@@ -1,20 +1,19 @@
 import { Input } from "../components/Input";
 import { ItemsForm } from "../components/ItemsForm";
 import ImageLogo from "../assets/images/dark.svg"
-import ImageHealth from "../assets/images/image 5.svg"
+import { Aside, Container, Main, VetorImgWrapper } from '../styles/Home'
 
 export function Home(){
     return(
-        <div>
-            <aside>
-                <div className="logo">
-                    <img src={ImageLogo} alt="imagem de logotipo Web Clever" />
-                </div>
+        <Container>
+            <Aside>
+                <img src={ImageLogo} alt="imagem de logotipo Web Clever" />
                 <strong>Relatórios de saúde em gráficos</strong>
                 <p>Em poucos segundos, transforme os seus dados de saúde em gráficos de fácil leitura</p>
-                <img src={ImageHealth} alt="Imagem de vetor que mostra uma atleta" />
-            </aside>
-            <main>
+                <VetorImgWrapper>
+                </VetorImgWrapper>
+            </Aside>
+            <Main>
                 <div>
                     <form action="">
                         <ItemsForm 
@@ -37,7 +36,7 @@ export function Home(){
                     </form>
                     <button>Gerar diário de saúde</button>
                 </div>
-            </main>
-        </div>
+            </Main>
+        </Container>
     )
 }
