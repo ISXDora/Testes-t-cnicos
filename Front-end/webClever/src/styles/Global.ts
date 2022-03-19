@@ -29,6 +29,10 @@ html {
 body {
     background: var(--background);
     -webkit-font-smoothing: antialiased;
+    height: 100vh;
+    width: 100vw;
+    max-width: 88.75rem;
+    min-height: 59.37rem;
 }
 
 body, input, button {

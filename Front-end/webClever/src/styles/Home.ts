@@ -4,7 +4,7 @@ import imgVetor from '../assets/images/image_5-removebg-preview.png'
 export const Container = styled.div`
      display: flex;
      align-items: stretch;
-     height: 100vh;
+     height: 100%;
  
 `;
 
@@ -44,6 +44,8 @@ export const Aside = styled.aside`
 export const Main = styled.main`
     flex: 7;
     display: flex;
+    align-items: center;
+    justify-content: center;
 
 `;
 
@@ -59,4 +61,16 @@ export const VetorImgWrapper = styled.div`
     mix-blend-mode: multiply;
 
 
+`;
+
+export const MainWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 59.37rem;
+    min-height: 56.06rem;
+    width: 47.5rem;
+    border: 1px solid #000;
+
+    margin: 3.31rem 2.5rem 0 1.7rem;
+    
 `

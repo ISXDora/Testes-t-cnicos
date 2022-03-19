@@ -1,7 +1,7 @@
 import { Input } from "../components/Input";
 import { ItemsForm } from "../components/ItemsForm";
 import ImageLogo from "../assets/images/dark.svg"
-import { Aside, Container, Main, VetorImgWrapper } from '../styles/Home'
+import { Aside, Container, Main, MainWrapper, VetorImgWrapper } from '../styles/Home'
 
 export function Home(){
     return(
@@ -14,7 +14,7 @@ export function Home(){
                 </VetorImgWrapper>
             </Aside>
             <Main>
-                <div>
+                <MainWrapper>
                     <form action="">
                         <ItemsForm 
                             name={'Nome completo'}
@@ -35,7 +35,7 @@ export function Home(){
                             value=""/>
                     </form>
                     <button>Gerar diário de saúde</button>
-                </div>
+                </MainWrapper>
             </Main>
         </Container>
     )
