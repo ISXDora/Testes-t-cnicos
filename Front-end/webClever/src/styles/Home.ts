@@ -87,6 +87,7 @@ export const ContainerForm = styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    
 
 `;
 
@@ -111,6 +112,10 @@ export const ContentForm = styled.div`
     min-height: 30.8rem;
 
     align-items: stretch;
+
+    button {
+        align-self: center;
+    }
 
 `
 

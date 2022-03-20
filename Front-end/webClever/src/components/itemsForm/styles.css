@@ -8,9 +8,8 @@
     margin-bottom: 0.5rem;
     
 }
-
-div:nth-last-child(div){
-    margin-bottom: 3.8rem;
+.content-itemform ::nth-last-child() input{
+        margin-bottom: 50px;
 }
 .isBoldTitle{
     font-weight: 700;
