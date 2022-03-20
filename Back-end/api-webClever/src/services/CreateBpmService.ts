@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
-import { Bpm } from "../models/Bpm";
-import { Health_Metric } from "../models/Health_metrics";
+import { Bpm } from "../entities/Bpm";
+import { Health_Metric } from "../entities/Health_metrics";
 
 type BpmRequest = {
     value: number;

@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
-import { Diastolic_Pressure } from "../models/Diastolic_pressure";
-import { Health_Metric } from "../models/Health_metrics";
+import { Diastolic_Pressure } from "../entities/Diastolic_pressure";
+import { Health_Metric } from "../entities/Health_metrics";
 
 type DiastolicPressureRequest = {
     value: number;

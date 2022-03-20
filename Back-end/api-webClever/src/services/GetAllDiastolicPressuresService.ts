@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Diastolic_Pressure } from "../models/Diastolic_pressure";
+import { Diastolic_Pressure } from "../entities/Diastolic_pressure";
 
 
 export class GetAllDiastolicPressuresService {

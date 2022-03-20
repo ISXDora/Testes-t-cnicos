@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Bpm } from "../models/Bpm";
+import { Bpm } from "../entities/Bpm";
 
 
 export class GetAllBpmsService {

@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
-import { Health_Metric } from "../models/Health_metrics";
-import { User } from "../models/User"
+import { Health_Metric } from "../entities/Health_metrics";
+import { User } from "../entities/User"
 
 type HealthMetricsRequest = {
     user_id: string;

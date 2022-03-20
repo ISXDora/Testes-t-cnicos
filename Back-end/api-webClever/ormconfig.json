@@ -1,0 +1,10 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5433,
+    "username": "postgres",
+    "password": "123456",
+    "database": "webCleverApi",
+    "entities": ["src/entities/**/*.ts"],
+    "migrations": ["src/db/migrations/*.ts"]
+}

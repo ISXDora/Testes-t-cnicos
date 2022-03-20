@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Health_Metric } from "../models/Health_metrics";
+import { Health_Metric } from "../entities/Health_metrics";
 
 
 export class GetHealthMetricsService {
