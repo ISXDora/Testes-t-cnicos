@@ -1,7 +1,8 @@
-import { Input } from "../components/Input";
-import { ItemsForm } from "../components/ItemsForm";
+import { Input } from "../components/input/Input";
+import { ItemsForm } from "../components/itemsForm/ItemsForm"
 import ImageLogo from "../assets/images/dark.svg"
-import { Aside, Container, Main, MainWrapper, VetorImgWrapper } from '../styles/Home'
+import { Aside, ButtonForm, Container, ContainerForm, ContentForm, HeaderForm, Main, MainWrapper, VetorImgWrapper } from '../styles/Home'
+
 
 export function Home(){
     return(
@@ -15,26 +16,39 @@ export function Home(){
             </Aside>
             <Main>
                 <MainWrapper>
-                    <form action="">
-                        <ItemsForm 
-                            name={'Nome completo'}
-                            />
-                            <Input 
-                                type="text"
-                                value=""
-                            />
-                        <ItemsForm 
-                            name={'Data de nascimento'}/>
-                            <Input
-                            type={"date"}
-                            value=""/>
-                        <ItemsForm 
-                            name={'Para qual dia você deseja gerar o gráfico de saúde?'}/>
-                            <Input 
-                            type={"date"}
-                            value=""/>
-                    </form>
-                    <button>Gerar diário de saúde</button>
+                    <ContainerForm>
+                        <HeaderForm>
+                            <h2>Diário de saúde</h2>
+                            <p>Crie o seu relatório diário de saúde</p>
+                        </HeaderForm>
+                        <ContentForm>
+                            <form action="">
+                                <ItemsForm 
+                                    name={'Nome completo'}
+                                    />
+                                    <Input 
+                                        type="text"
+                                        value=""
+                                    />
+                                <ItemsForm 
+                                    name={'Data de nascimento'}/>
+                                    <Input
+                                    type="date"
+                                    value=""
+                                    placeholder="dd/mm/aaaa"/>
+                                <ItemsForm
+                                    isBoldTitle
+                                    name={'Para qual dia você deseja gerar o gráfico de saúde?'}/>
+                                    <Input 
+                                    type="date"
+                                    value=""
+                                    placeholder="dd/mm/aaaa"/>
+                            </form>
+                            <ButtonForm
+                                disabled
+                            >Gerar diário de saúde</ButtonForm>
+                        </ContentForm>
+                    </ContainerForm>
                 </MainWrapper>
             </Main>
         </Container>

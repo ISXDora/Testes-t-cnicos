@@ -1,0 +1,17 @@
+
+.content-itemform {
+
+    width: 100%;
+    font-weight: 500;
+    font-size: 0.87rem;
+    line-height: 1.06rem;
+    margin-bottom: 0.5rem;
+    
+}
+
+div:nth-last-child(div){
+    margin-bottom: 3.8rem;
+}
+.isBoldTitle{
+    font-weight: 700;
+}
