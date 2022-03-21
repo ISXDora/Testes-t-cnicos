@@ -10,7 +10,7 @@ export class User {
     name: string;
 
     @Column()
-    birth_date: Date;
+    birthDate: Date;
 
     @CreateDateColumn()
     created_at: Date;

@@ -3,17 +3,17 @@ import { User } from "../entities/User"
 
 type UserRequest = {
     name: string;
-    birth_date: Date;
+    birthDate: Date;
 }
 
 export class CreateUserService {
-    async execute({name, birth_date}:UserRequest ): Promise<User> {
+    async execute({name, birthDate}:UserRequest ): Promise<User> {
         
         const repo = getRepository(User);
 
         const user = repo.create({
             name,
-            birth_date
+            birthDate
         })
 
         await repo.save(user)
