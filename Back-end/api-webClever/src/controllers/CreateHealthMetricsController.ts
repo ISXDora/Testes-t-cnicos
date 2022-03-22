@@ -3,11 +3,11 @@ import { CreateHealthMetricsService } from '../services/CreateHealthMetricsServi
 
 export class CreateHealthMetricsController {
     async handle(request: Request, response: Response){
-        const {user_id, measurement_date} = request.body
+        const {user_id, measurementDate} = request.body
 
         const service = new CreateHealthMetricsService();
 
-        const result = await service.execute({user_id, measurement_date})
+        const result = await service.execute({user_id, measurementDate})
 
         if(result instanceof Error) {
             return response.status(400).json(result.message);

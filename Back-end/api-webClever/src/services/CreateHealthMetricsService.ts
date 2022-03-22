@@ -4,13 +4,13 @@ import { User } from "../entities/User"
 
 type HealthMetricsRequest = {
     user_id: string;
-    measurement_date: Date;
+    measurementDate: Date;
 }
 
 export class CreateHealthMetricsService {
     async execute({
         user_id, 
-        measurement_date}:HealthMetricsRequest ): Promise<Error | HealthMetricsRequest> {
+        measurementDate}:HealthMetricsRequest ): Promise<Error | HealthMetricsRequest> {
         
         const repo = getRepository(Health_Metric);
         const repoUser = getRepository(User)
@@ -21,7 +21,7 @@ export class CreateHealthMetricsService {
 
         const health_metrics = repo.create({
             user_id,
-            measurement_date
+            measurementDate
         })
 
         await repo.save(health_metrics)

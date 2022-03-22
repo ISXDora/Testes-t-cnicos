@@ -15,7 +15,7 @@ export class Health_Metric {
     user_id: string;
 
     @Column()
-    measurement_date: Date;
+    measurementDate: Date;
 
     @CreateDateColumn()
     created_at: Date;

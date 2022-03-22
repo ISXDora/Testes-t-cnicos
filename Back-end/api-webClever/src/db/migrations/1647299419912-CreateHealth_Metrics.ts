@@ -18,7 +18,7 @@ export class CreateHealthMetrics1647299419912 implements MigrationInterface {
                     type: "uuid"
                 },
                 {
-                    name: "measurement_date",
+                    name: "measurementDate",
                     type: "date"
                 },
                 {
