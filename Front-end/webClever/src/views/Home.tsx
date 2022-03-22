@@ -5,16 +5,13 @@ import ImageLogo from "../assets/images/dark.svg";
 import { Aside, ButtonForm, Container, ContainerForm, ContentForm, GroupButtonsHoursSelected, HeaderForm, Main, MainWrapper, VetorImgWrapper } from '../styles/Home';
 import { api } from "../services/api";
 import { ButtonSelectedHours } from "../components/Button/styles";
-
+import { CardMetricsCreate } from "../components/CardMetrics/CardMetricsCreate";
 
 
 export function Home(){
 
     const [name, setName] = useState('');
     const [birthDate, setBirthDate] = useState('');
-    const [bpm, setBpm] = useState(Number)
-    const [diastolic, setDiastolic] = useState(Number)
-    const [systolic, setSystolic] = useState(Number)
     const [measurement, setMeasurement] = useState('')
 
 
@@ -28,22 +25,12 @@ export function Home(){
 
         const data = {
             name,
-            birthDate,
-            measurement
+            birthDate
         }
         
         api.post('/users', data)
             .then(response => console.log(response.data))
     }
-    const dataMeasurement = {
-         "02:00" : [diastolic, systolic, bpm],
-         "06:00" : [diastolic, systolic, bpm],
-         "10:00" : [diastolic, systolic, bpm],
-         "14:00" : [diastolic, systolic, bpm],
-         "18:00" : [diastolic, systolic, bpm],
-         "22:00" : [diastolic, systolic, bpm]
-    }
-    
 
     return(
         <Container>
@@ -74,6 +61,7 @@ export function Home(){
                                 <ItemsForm 
                                     name={'Data de nascimento'}/>
                                     <Input
+                                    mask='dd/mm/yyyy'
                                     type="text"
                                     name="birthDate"
                                     value={birthDate}
@@ -84,18 +72,21 @@ export function Home(){
                                     isBoldTitle
                                     /* Inserir aqui uma função para habilitar as outras opções do form com animação fade-in*/
                                     name={'Para qual dia você deseja gerar o gráfico de saúde?'}/>
-                                    <Input 
+                                    <Input
                                     type="text"
                                     name="measurement"
                                     value={measurement}
                                     onChange={event => setMeasurement(new Intl.DateTimeFormat('pt-BR').format(new Date(event.target.value)))}
-                                    placeholder="dd/mm/aaaa"/>
+                                    placeholder="dd/mm/aaaa"
+                                    />
                                 <ItemsForm
                                     isBoldTitle
                                     name={"Selecione a hora para preencher os dados"}
                                 
                                 />
-                                <GroupButtonsHoursSelected>
+                                <GroupButtonsHoursSelected
+                                /* Realizar animação ao cliclar no butão de hora e só habilitar o botão do form quando todos estiverem preenchidos*/
+                                > 
                                     <ButtonSelectedHours>02:00</ButtonSelectedHours>
                                     <ButtonSelectedHours>06:00</ButtonSelectedHours>
                                     <ButtonSelectedHours>10:00</ButtonSelectedHours>
@@ -105,8 +96,12 @@ export function Home(){
                                 </GroupButtonsHoursSelected>
                             </form>
                         </ContentForm>
+                            <CardMetricsCreate                                 
+                                bmp=""
+                                pressureDiastolic=""
+                                pressureSystolic=""></CardMetricsCreate>
+
                             <ButtonForm
-                          /* retirar para testar */ {...console.log('Comentar para testar form')}
                                 form="form-create"
                                 onSubmit={handleCreateNewPacient}
                             >Gerar diário de saúde</ButtonForm>

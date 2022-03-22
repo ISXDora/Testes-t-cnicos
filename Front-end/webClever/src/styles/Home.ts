@@ -17,7 +17,7 @@ export const Aside = styled.aside`
     flex-direction: column;
     position: relative;
     max-width: 36.6rem;
-    height: 59.3rem;
+    min-height: 59.3rem;
     img {
         margin: 3.2rem 3.2rem; /* em torno de 50px */
         align-self: flex-start;
@@ -67,7 +67,7 @@ export const VetorImgWrapper = styled.div`
 export const MainWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    height: 59.37rem;
+    /*height: 59.37rem; >>> limitou o container filho e seus filhos*/
     min-height: 56.06rem;
     width: 47.5rem;
 
