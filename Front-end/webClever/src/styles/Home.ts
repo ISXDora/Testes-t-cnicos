@@ -87,7 +87,11 @@ export const ContainerForm = styled.div`
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    
+
+    > button {
+        align-self : center;
+    }
+
 
 `;
 
@@ -107,18 +111,6 @@ export const HeaderForm = styled.div`
 
 `;
 
-export const ContentForm = styled.div`
-    width: 100%;
-    min-height: 30.8rem;
-
-    align-items: stretch;
-
-    button {
-        align-self: center;
-    }
-
-`
-
 export const ButtonForm = styled.button`
 
     background-color:#3754DB;;
@@ -129,7 +121,32 @@ export const ButtonForm = styled.button`
     outline: none;
     border: none;
 
+    margin-top: 1.87rem;
+
     color: white;
 
-`
 
+    &:disabled{
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+
+`;
+
+export const ContentForm = styled.div`
+    width: 100%;
+   
+`;
+
+export const GroupButtonsHoursSelected = styled.div`
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.14rem;
+    height: 3.43rem;
+    justify-content: space-around;
+    
+    margin-bottom: 1.56rem;
+
+`;
