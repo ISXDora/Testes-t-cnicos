@@ -5,9 +5,9 @@ import ImgBpm from '../../assets/images/001-heart-rate 1.svg'
 import ImgPressure from '../../assets/images/pressao-arterial.svg'
 
 type HealthMetricsProps = {
-        pressureDiastolic: string;
-        pressureSystolic: string;
-        bmp: string;
+        pressureDiastolic: Number;
+        pressureSystolic: Number;
+        bmp: Number;
 }
 export function CardMetricsCreate(props: HealthMetricsProps){
 

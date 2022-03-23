@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { Input } from "../components/input/Input";
 import { ItemsForm } from "../components/itemsForm/ItemsForm";
 import ImageLogo from "../assets/images/dark.svg";
@@ -6,32 +6,43 @@ import { Aside, ButtonForm, Container, ContainerForm, ContentForm, GroupButtonsH
 import { api } from "../services/api";
 import { ButtonSelectedHours } from "../components/Button/styles";
 import { CardMetricsCreate } from "../components/CardMetrics/CardMetricsCreate";
+import { date } from "../Lib/utils";
+import { HealthMetricsContext } from "../HealthMetricsContext";
 
 
 export function Home(){
+    const data = useContext(HealthMetricsContext)
+    console.log(data)
 
     const [name, setName] = useState('');
     const [birthDate, setBirthDate] = useState('');
-    const [measurement, setMeasurement] = useState('')
-
-
-    useEffect(() => {
-        api.get('users')
-            .then(response => console.log(response.data))
-    }, [])
-
-    function handleCreateNewPacient(event: FormEvent){
+    const [measurementDate, setMeasurementDate] = useState('')
+    const [healthMetrics, setHealthMetrics] = useState({"bpms":{},"pressureDiastolics":{}, "pressureSystolics":{}})
+    
+    async function handleCreateNewPacient(event: FormEvent){
         event.preventDefault()
-
+        
         const data = {
             name,
             birthDate
         }
-        
-        api.post('/users', data)
-            .then(response => console.log(response.data))
+        const response = await api.post('/users', data)
+        const userObj = await api.get(`/users/${response.data.id}`)
+        const user_id = userObj.data.id
+        const health_metrics = {
+            user_id,
+            measurementDate
+        }
+        console.log(health_metrics)
+        const res= await api.post("/metrics", health_metrics )
+        console.log(res.data)
+
     }
 
+    async function handleCreateHealthMetrics(sevent: FormEvent){
+      }
+
+    
     return(
         <Container>
             <Aside>
@@ -45,6 +56,7 @@ export function Home(){
                 <MainWrapper>
                     <ContainerForm>
                         <HeaderForm>
+                                
                             <h2>Diário de saúde</h2>
                             <p>Crie o seu relatório diário de saúde</p>
                         </HeaderForm>
@@ -61,12 +73,10 @@ export function Home(){
                                 <ItemsForm 
                                     name={'Data de nascimento'}/>
                                     <Input
-                                    mask='dd/mm/yyyy'
                                     type="text"
-                                    name="birthDate"
-                                    value={birthDate}
+                                    name={birthDate}
+                                    value=""
                                     onChange={event => setBirthDate(new Intl.DateTimeFormat('pt-BR').format(new Date(event.target.value)))}
-                                    {...console.log("travei aqui, vi que tem uma biblioteca para utilizar, o que me travou mesmo foi não conseguir transformar string para timestamp")}
                                     />
                                 <ItemsForm
                                     isBoldTitle
@@ -75,8 +85,9 @@ export function Home(){
                                     <Input
                                     type="text"
                                     name="measurement"
-                                    value={measurement}
-                                    onChange={event => setMeasurement(new Intl.DateTimeFormat('pt-BR').format(new Date(event.target.value)))}
+                                    value={measurementDate}
+                                    onClick={() => console.log('inserir animação fade in para abrir o componente seguinte')}
+                                    onChange={event => setMeasurementDate(new Intl.DateTimeFormat('pt-BR').format(new Date(event.target.value)))}
                                     placeholder="dd/mm/aaaa"
                                     />
                                 <ItemsForm
@@ -87,20 +98,17 @@ export function Home(){
                                 <GroupButtonsHoursSelected
                                 /* Realizar animação ao cliclar no butão de hora e só habilitar o botão do form quando todos estiverem preenchidos*/
                                 > 
-                                    <ButtonSelectedHours>02:00</ButtonSelectedHours>
+                                    <ButtonSelectedHours
+                                    >02:00</ButtonSelectedHours>
                                     <ButtonSelectedHours>06:00</ButtonSelectedHours>
                                     <ButtonSelectedHours>10:00</ButtonSelectedHours>
                                     <ButtonSelectedHours>14:00</ButtonSelectedHours>
                                     <ButtonSelectedHours>20:00</ButtonSelectedHours>
                                     <ButtonSelectedHours>22:00</ButtonSelectedHours>
-                                </GroupButtonsHoursSelected>
+                                </GroupButtonsHoursSelected>           
+                                      
                             </form>
                         </ContentForm>
-                            <CardMetricsCreate                                 
-                                bmp=""
-                                pressureDiastolic=""
-                                pressureSystolic=""></CardMetricsCreate>
-
                             <ButtonForm
                                 form="form-create"
                                 onSubmit={handleCreateNewPacient}
