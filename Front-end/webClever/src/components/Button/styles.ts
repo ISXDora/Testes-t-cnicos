@@ -19,4 +19,5 @@ export const ButtonSelectedHours = styled.button<ButtonHoursSelectedProps>`
             filter: brightness(0.9);
         }
 
+
 `;

@@ -150,3 +150,7 @@ export const GroupButtonsHoursSelected = styled.div`
     margin-bottom: 1.56rem;
 
 `;
+
+export const ContentInputHours = styled.div`
+
+`

@@ -11,6 +11,7 @@ export const Container = styled.div`
 `;
 
 export const ContentMetric = styled.div`
+    visibility: hidden;
     display: flex;
     
     &{
@@ -31,6 +32,7 @@ export const ContentMetric = styled.div`
 `;
 
 export const InputMetrics = styled.input`
+
     margin-left: 1.12rem;
     width: 8.12rem;
     height: 2.25rem;
