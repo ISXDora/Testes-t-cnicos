@@ -4,7 +4,7 @@ interface ButtonHoursSelectedProps {
     isActive?: boolean;
 }
 
-export const ButtonSelectedHours = styled.button<ButtonHoursSelectedProps>`
+export const ButtonSelectedHours = styled.input<ButtonHoursSelectedProps>`
 
         border: 1px solid #E5E5E5;
         border-radius: 0.37rem;

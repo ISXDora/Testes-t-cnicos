@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const ContainerMetrics = styled.div`
     height: 12.12rem;
     border : 1px solid #E7F0FD;
     border-radius: 1rem;
@@ -11,7 +11,7 @@ export const Container = styled.div`
 `;
 
 export const ContentMetric = styled.div`
-    visibility: hidden;
+
     display: flex;
     
     &{

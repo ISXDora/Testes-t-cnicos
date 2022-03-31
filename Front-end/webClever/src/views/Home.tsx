@@ -1,49 +1,106 @@
-import { useState } from 'react';
-import { Input } from "../components/input/Input";
-import { ItemsForm } from "../components/itemsForm/ItemsForm";
-import ImageLogo from "../assets/images/dark.svg";
+import { useState, useCallback, useEffect } from 'react';
 import { Aside, ButtonForm, Container, ContainerForm, ContentForm, ContentInputHours, GroupButtonsHoursSelected, HeaderForm, Main, MainWrapper, VetorImgWrapper } from '../styles/Home';
-import {ContentMetric, InputMetrics} from '../components/CardMetrics/styles'
-import ImgBpm from '../assets/images/001-heart-rate 1.svg'
-import ImgPressure from '../assets/images/pressao-arterial.svg'
-import { api } from "../services/api";
-import { ButtonSelectedHours } from "../components/Button/styles";
-import { Formik, Form, Field } from 'formik';
-import { boolean } from "yup";
+import {ContentMetric, InputMetrics, ContainerMetrics} from '../components/CardMetrics/styles'
+import { useForm, SubmitHandler} from "react-hook-form";
 
+import { Input } from "../components/input/Input";
+import { ButtonSelectedHours } from "../components/Button/styles";
+import { ItemsForm } from "../components/itemsForm/ItemsForm";
+
+import ImageLogo from "../assets/images/dark.svg";
+import ImgPressure from '../assets/images/pressao-arterial.svg'
+import ImgBpm from '../assets/images/001-heart-rate 1.svg'
+import { number } from 'yup';
+
+
+type Inputs ={
+    name: string;
+    birthDate: string;
+    measurementDate: string;
+    bpm: string;
+    pressureDiastolic: string;
+    pressureSystolic: string;
+}
+type Metric = {
+    bpm: string;
+    pressureDiastolic: string;
+    pressureSystolic: string;
+}
 
 
 export function Home(){
-    const [divShow, setdivShow] = useState(false)
+    const [divShow, setdivShow] = useState(false);
+    const [selectedTime, setSelectedTime] = useState('') 
+    const [metricsMapState, setMetricsMapState] =  useState<Map<string, Metric>>(new Map<string, Metric>()) 
 
-   /*
+   
+    const {  register, handleSubmit, getValues, setValue, formState: { errors } } = useForm<Inputs>();
+    const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+    const onCreateMetricsSubmit: SubmitHandler<Inputs> = metrics => console.log(metrics);
+
     
-    async function handleCreateNewPacient(event: FormEvent){
-        event.preventDefault()
-        
-        const data = {
-            name,
-            birthDate
-        }
-        const response = await api.post('/users', data)
-        const userObj = await api.get(`/users/${response.data.id}`)
-        const user_id = userObj.data.id
-        const health_metrics = {
-            user_id,
-            measurementDate
-        }
-        console.log(health_metrics)
-        const res= await api.post("/metrics", health_metrics )
-        console.log(res.data)
-
-    }
-*/
-    const ItemsHours: string[] = ['02:00:00','06:00:00','10:00:00','14:00:00','20:00:00','22:00:00'];
-    console.log(divShow)
+    useEffect(()=>{
+        const metricsMap = new Map<string, Metric>()
+        metricsMap.set("02:00",{bpm:'',pressureDiastolic:'',pressureSystolic:''})
+        metricsMap.set("06:00",{bpm:'',pressureDiastolic:'',pressureSystolic:''})
+        metricsMap.set("10:00",{bpm:'',pressureDiastolic:'',pressureSystolic:''})
+        metricsMap.set("14:00",{bpm:'',pressureDiastolic:'',pressureSystolic:''})
+        metricsMap.set("18:00",{bpm:'',pressureDiastolic:'',pressureSystolic:''})
+        metricsMap.set("22:00",{bpm:'',pressureDiastolic:'',pressureSystolic:''})
+        setMetricsMapState(metricsMap)
+        setSelectedTime("02:00")
+    },[])
 
     
 
+    const nextHour = useCallback(
+        () => {
+            if(metricsMapState !== undefined && metricsMapState.has(selectedTime)){
+                const hourKeys = Array.from(metricsMapState.keys())
+
+                const indexHour = hourKeys.indexOf(selectedTime)
+                const next = indexHour + 1
+                
+                const itemHours = metricsMapState.set(selectedTime, {bpm:getValues('bpm'), pressureDiastolic:getValues('pressureDiastolic'), pressureSystolic:getValues('pressureSystolic')})
+                
+                setSelectedTime(hourKeys[next])
+                const nextMetricValue = metricsMapState.get(hourKeys[next])
+                if(nextMetricValue !== undefined && (nextMetricValue.bpm != '' || nextMetricValue.pressureDiastolic != '' || nextMetricValue.pressureSystolic != '')){
+                    setValue('bpm', nextMetricValue.bpm)
+                    setValue('pressureDiastolic', nextMetricValue.pressureDiastolic)
+                    setValue('pressureSystolic', nextMetricValue.pressureSystolic)
+                }else{
+                    setValue('bpm', '')
+                    setValue('pressureDiastolic', '')
+                    setValue('pressureSystolic', '')
+                }
+                
+                console.log(itemHours)
+            }
+        },
+        [selectedTime]
+        ) 
     
+    const toBackHour = useCallback(
+        () => {
+            if(metricsMapState !== undefined && metricsMapState.has(selectedTime)){
+                const hourKeys = Array.from(metricsMapState.keys())
+
+                const indexHour = hourKeys.indexOf(selectedTime)
+                const back = indexHour - 1
+                setSelectedTime(hourKeys[back])
+                const metricsBack = metricsMapState.get(hourKeys[back])
+                if(metricsBack !== undefined){
+
+                    setValue('bpm', metricsBack.bpm)
+                    setValue('pressureDiastolic', metricsBack.pressureDiastolic)
+                    setValue('pressureSystolic', metricsBack.pressureSystolic)
+                }
+            }
+        },
+        [selectedTime]
+    )   
+
     return(
         <Container>
             <Aside>
@@ -62,118 +119,88 @@ export function Home(){
                             <p>Crie o seu relatório diário de saúde</p>
                         </HeaderForm>
                         <ContentForm>
-                            <Formik
-                                    onSubmit={(values, actions) => {
-                                        console.log('SUBMIT:', values);
-                                        actions.setSubmitting(false); 
-                                    }}
-            
-                                    initialValues={{
-                                        name: '',
-                                        birthDate: '',
-                                        measurementDate: '',
-                                        bpm: '',
-                                        ItemsHours: ItemsHours,
-                                        pressureDiastolic: '',
-                                        pressureSystolic: ''
-                                    }}
-                                    >
-                            
-                                
-                                {props => (<Form id="form-create" onSubmit={props.handleSubmit}>
+                           <form onSubmit={handleSubmit(onSubmit)} id="form-create">
                                 <ItemsForm name={'Nome completo'} />
-                                    <Field 
-                                        component={Input}
-                                        type="text"
-                                        name="name"
-                                        id="name"
-                                        onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
-                                        value={props.values.name}
-                                    />
+                                    <Input  type="text" {...register("name")}/>
                                 <ItemsForm 
                                     name={'Data de nascimento'}/>
-                                    <Field 
-                                        component={Input}
-                                        type="date"
-                                        name="birthDate"
-                                        id="birthDate"
-                                        placeholder="dd/mm/aaaa"
-                                        onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
-                                        value={props.values.birthDate}
-                                    />
+                                    <Input type="date"  {...register("birthDate")} placeholder="dd/mm/aaaa" />
                                 <ItemsForm
                                     isBoldTitle
                                     /* Inserir aqui uma função para habilitar as outras opções do form com animação fade-in*/
                                     name={'Para qual dia você deseja gerar o gráfico de saúde?'}/>
-                                    <Field 
-                                        component={Input}
+                                    <Input 
                                         type="date"
                                         id="measurementDate"
-                                        name="measurementDate"
-                                        onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
+                                        {...register("measurementDate")} 
                                         onClick={()=> setdivShow(true)}
-                                        value={props.values.measurementDate}            
                                         placeholder="dd/mm/aaaa"
                                     />
-                                { divShow && <ContentInputHours>
+
+
+                                {divShow && <ContentInputHours>
                                 <ItemsForm
                                     isBoldTitle
                                     name={"Selecione a hora para preencher os dados"}
                                 
                                 />
+                                
                                 <GroupButtonsHoursSelected 
                                 /* Realizar animação ao cliclar no butão de hora e só habilitar o botão do form quando todos estiverem preenchidos*/
                                 >
-                                    {ItemsHours.map((item,index)=>{
-                                        return  <ButtonSelectedHours key={index}
-                                                    isActive
-                                                    type="button"
-                                                    name="ItemsHours"
-                                                    id="ItemsHours"
-                                                    onClick={()=>{console.log(index)}}
-                                        > {item.replace(':00', '')}</ButtonSelectedHours>
-                                    })}
-                                   
+                                 {
+                                     Array.from(metricsMapState.keys()).map((item, index) => {
+                                         return(
+                                            <ButtonSelectedHours key={index}
+											isActive={selectedTime === item}
+											type="button"
+											name={item}
+											value={item}
+                                            onClick={() => setSelectedTime(item)}
+											/>
+                                         )
+                                     })
+                                 }  
+                               
                                 </GroupButtonsHoursSelected>
                                 </ContentInputHours>}
-                                <ContentMetric>
+                                { divShow && <ContainerMetrics>
+                                    
+                                 <ContentMetric>
                                     <div><span> <img src={ImgBpm} alt="Ícone referenciando batimentos cardíacos por minuto" /></span>BPM</div>
-                                    <Field 
-                                        component={InputMetrics}
-                                        name="bpm"
+                                    <InputMetrics
                                         id="bpm"
                                         type="number"
-                                        onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
-                                        value={props.values.bpm}
+                                        {...register("bpm")} 
+    
                                 />
                                 </ContentMetric>
                                 <ContentMetric>
                                 <div><span> <img src={ImgPressure} alt="Ícone referenciando pressão arterial" /></span>PRESSÃO ARTERIAL</div>
-                                    <Field 
-                                        component={InputMetrics}
-                                        name="pressureDiastolic"
+                                    <InputMetrics
+                                        
                                         id="pressureDiastolic"
                                         type="number"
-                                        onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
-                                        value={props.values.pressureDiastolic}
+                                        {...register("pressureDiastolic")} 
                                     />
-                                    <Field 
-                                        component={InputMetrics}
+                                    <InputMetrics
+                                        {...register("pressureSystolic")} 
                                         name="pressureSystolic"
                                         id="pressureSystolic"
                                         type="number"
-                                        onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
-                                        value={props.values.pressureSystolic}
                                         />
-                                </ContentMetric>               
-                                </Form>)}
-                            </Formik>
+                                </ContentMetric>
+                                <button
+                                    
+                                    onClick={toBackHour}
+                                >Anterior</button>
+
+                                <button
+                                    onClick={nextHour}
+                                >Próximo</button>
+
+                                </ContainerMetrics>}
+                                </form>
                         </ContentForm>
                             <ButtonForm
                                 type="submit"

@@ -1,11 +1,18 @@
-import {InputHTMLAttributes} from 'react'
+import React from 'react';
+import {InputHTMLAttributes} from 'react';
 import './styles.css'
 
-type InputProps =InputHTMLAttributes<HTMLInputElement>
 
 
-export function Input(props: InputProps){
-    return (
-        <input className="input"{...props}/>
-    )
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    isActive?: boolean;
+
 }
+
+
+export const Input = React.forwardRef(({isActive=false,...props}: InputProps, ref:any)=>{
+    return (
+        <input className={`input ${isActive ? 'isActive' : ""}`}{...props} ref={ref}/>
+    )
+})  
+

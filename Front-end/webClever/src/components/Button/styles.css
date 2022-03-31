@@ -1,0 +1,19 @@
+    .input-buttons-hour {
+        border: 1px solid #E5E5E5;
+        border-radius: 0.37rem;
+        background:#F7FAFC;
+        font-size: 1rem;
+        line-height: 1.56rem;
+        color: #5B5B5B;
+
+        transition: filter 0.2s;
+    }
+
+    .input-buttons-hour:hover{
+
+        filter: brightness(0.9);
+    }
+    .isActive{
+        background-color: #3962FC;
+        color: #fff;
+    }
