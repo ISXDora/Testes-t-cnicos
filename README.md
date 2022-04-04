@@ -51,6 +51,10 @@ O aplicativo Web Clever faz o acompanhamento das métricas de parâmetros de sa�
 
 `npm install`
 
+*migrations*
+
+`yarn typeorm migration:run`
+
 *Iniciando Web Clever API Server*
 
 `npm dev` 
