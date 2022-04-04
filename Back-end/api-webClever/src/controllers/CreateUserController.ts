@@ -7,10 +7,7 @@ import { CreateUserService } from '../services/CreateUserService';
 export class CreateUserController {
     async handle(request: Request, response: Response){
         const {name, birthDate, measurementDate, metricsMap} = request.body
-        //console.log(request.body)
-        console.log(
-             Object.getOwnPropertyDescriptors(metricsMap).value
-        )
+      
        
 
         const service = new CreateUserService();

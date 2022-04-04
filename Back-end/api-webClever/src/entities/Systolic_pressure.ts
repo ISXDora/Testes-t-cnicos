@@ -19,4 +19,7 @@ export class Systolic_Pressure {
 
     @CreateDateColumn()
     created_at: Date;
+
+    @Column('time')
+    hour: Date;
 }

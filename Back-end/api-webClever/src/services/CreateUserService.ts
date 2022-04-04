@@ -18,74 +18,72 @@ type UserRequest = {
 export class CreateUserService {
     async execute({name, birthDate,measurementDate, metricsMap}:UserRequest ): Promise< Error | User > {
         
-       
-       
+        let newArrayMetrics = Object.entries(metricsMap)
 
-       const resultMetricsMap = Object.entries({metricsMap})
-        const valueBpm = []
-        for (let metric of resultMetricsMap){
-            valueBpm.push(metric[1]['02:00'].bpm)
-            valueBpm.push(metric[1]['06:00'].bpm)
-            valueBpm.push(metric[1]['10:00'].bpm)
-            valueBpm.push(metric[1]['14:00'].bpm)
-            valueBpm.push(metric[1]['18:00'].bpm)
-            valueBpm.push(metric[1]['22:00'].bpm)
-
-
-        }
-        Object.keys(metricsMap).map((item, index)=>console.log(item))
-       //console.log(resultMetricsMap[0][1]['02:00'].bpm)
-    
-            
-       
-        //console.log(Object.getOwnPropertyDescriptor(metricsMap,'02:00').value.bpm)
-        //console.log(Object.getOwnPropertyDescriptor(metricsMap,'06:00').value)
-        //console.log(Object.getOwnPropertyDescriptor(metricsMap,'10:00').value)
-        //console.log(Object.getOwnPropertyDescriptor(metricsMap,'14:00').value)
-        //console.log(Object.getOwnPropertyDescriptor(metricsMap,'18:00').value)
-        //console.log(Object.getOwnPropertyDescriptor(metricsMap,'22:00').value)        
-
-        // resultMetricsMap.forEach((metric, hour)=> {console.log(metric)
-        // console.log(hour)})
+        let metricMapResult = new Map(newArrayMetrics);
+              
          const repo = getRepository(User);
 
          const user = repo.create({
-             name,
-             birthDate,
+            name,
+            birthDate,
 
          })
          const userReturn = await repo.save(user)
 
+         /*------------------------MeasurementDate-HealthMetric-----------------------------*/
 
          const repoHealth = getRepository(Health_Metric);
          if (!await repo.findOne(userReturn.id)){
-             return new Error("User does not exist")
+            return new Error("User does not exist")
          }
          const health_metrics = await repoHealth.create({
-             user_id: userReturn.id,
-             measurementDate
+            user_id: userReturn.id,
+            measurementDate
          })
          const healthReturn = await repoHealth.save(health_metrics)
 
+         /*------------------------Bpm----------------------------*/
 
-         const repoBpm = getRepository(Bpm);
+        const repoBpm = getRepository(Bpm);
          if (!await repoHealth.findOne(healthReturn.id)){
-             return new Error("Health metrics not found!")
+            return new Error("Health metrics not found!")
          }
 
-        for (let item of valueBpm){
+        const bpms: Array<any> = new Array();
+        metricMapResult.forEach((metric, hourKey)=> {
+
+            console.log(metric)
+            console.log('hour', hourKey)
+
             
-            const bpm = repoBpm.create({
-                value : item,
-                health_metrics_id: healthReturn.id
-            })
-            const bpmReturn =  await repoBpm.save(bpm)
-        }
+            if(metric.bpm){
+                
+                const splitedHour = hourKey.split(':')
+                const bpm = repoBpm.create({
+                    health_metrics_id: healthReturn.id,
+                    value: metric.bpm,
+                    hour: new Date(0, 0, 0, Number(splitedHour[0]), Number(splitedHour[1]), 0)
+                      })
+                bpms.push(bpm)
+                    
+            }
+        })
+             
+          const bpmReturn =  await repoBpm.save(bpms)
+
+        // for (let item of valueBpm){
+            
+        //    const bpm = repoBpm.create({
+        //        value : item,
+        //        health_metrics_id: healthReturn.id
+        //    })
+        // }
 
 
         
 
-        return user;
+        return //user;
     
     }
 }

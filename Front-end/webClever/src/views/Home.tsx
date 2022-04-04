@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { Aside, ButtonForm, Container, ContainerForm, ContentForm, ContentInputHours, GroupButtonsHoursSelected, HeaderForm, Main, MainWrapper, VetorImgWrapper } from '../styles/Home';
 import {ContentMetric, InputMetrics, ContainerMetrics} from '../components/CardMetrics/styles'
 import { useForm, SubmitHandler} from "react-hook-form";
-
+import {api} from '../services/api'
 import { Input } from "../components/input/Input";
 import { ButtonSelectedHours } from "../components/Button/styles";
 import { ItemsForm } from "../components/itemsForm/ItemsForm";
@@ -11,6 +11,7 @@ import ImageLogo from "../assets/images/dark.svg";
 import ImgPressure from '../assets/images/pressao-arterial.svg'
 import ImgBpm from '../assets/images/001-heart-rate 1.svg'
 import { number } from 'yup';
+import { appendFile } from 'fs';
 
 
 type Inputs ={
@@ -26,7 +27,12 @@ type Metric = {
     pressureDiastolic: string;
     pressureSystolic: string;
 }
-
+type User = {
+    name: string;
+    birthDate: string;
+    measurementDate: string;
+    metricsMap: Map<string, Metric>
+}
 
 export function Home(){
     const [divShow, setdivShow] = useState(false);
@@ -35,7 +41,9 @@ export function Home(){
 
    
     const {  register, handleSubmit, getValues, setValue, formState: { errors } } = useForm<Inputs>();
-    const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+    const onSubmit: SubmitHandler<Inputs> = (data) =>{
+        createUser(data)
+    };
     const onCreateMetricsSubmit: SubmitHandler<Inputs> = metrics => console.log(metrics);
 
     
@@ -51,7 +59,21 @@ export function Home(){
         setSelectedTime("02:00")
     },[])
 
+    const createUser = useCallback(
+        (data) => {
+            const user = {
+                name: data.name,
+                birthDate: data.birthDate,
+                measurementDate: data.measurementDate,
+                metricsMap: Object.fromEntries(metricsMapState)
+
     
+            }
+            console.log(user)
+            api.post("/users", user)
+        },
+        [metricsMapState]
+        ) 
 
     const nextHour = useCallback(
         () => {

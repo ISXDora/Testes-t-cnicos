@@ -19,4 +19,7 @@ export class Bpm {
 
     @CreateDateColumn()
     created_at: Date;
+
+    @Column('time')
+    hour: Date;
 }
