@@ -20,7 +20,7 @@ const UserContext = createContext<UserContextData>({}as UserContextData)
 
 export const UserProvider:React.FC=({children})=>{
 
-    const create = useCallback( async (user: any)=>{
+    const create = useCallback( async (user: UserContextData)=>{
 
     },[])
     return (
