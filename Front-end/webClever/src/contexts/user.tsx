@@ -1,7 +1,18 @@
 import React, { createContext, useCallback, useContext } from "react";
 
+type Metric ={
+    bpm: string;
+    pressureDiastolic: string;
+    pressureSystolic: string;
+}
+
 interface UserContextData {
-    create: (user:any) => Promise<void>;
+    create: (user: {
+    name: string;
+    birthDate: string;
+    measurementDate: string;
+    metricsMap: Map<string, Metric>
+    }) => Promise<void>;
 }
 
 const UserContext = createContext<UserContextData>({}as UserContextData)
