@@ -37,7 +37,7 @@ type User = {
 export function Home(){
     const [divShow, setdivShow] = useState(false);
     const [selectedTime, setSelectedTime] = useState('') 
-    const [metricsMapState, setMetricsMapState] =  useState<Map<string, Metric>>(new Map<string, Metric>()) 
+    const [metricsMapState, setMetricsMapState] =  useState<Map<string, Metric>>(new Map<string, Metric>())
 
    
     const {  register, handleSubmit, getValues, setValue, formState: { errors } } = useForm<Inputs>();
@@ -65,12 +65,11 @@ export function Home(){
                 name: data.name,
                 birthDate: data.birthDate,
                 measurementDate: data.measurementDate,
-                metricsMap: Object.fromEntries(metricsMapState)
-
-    
+                metricsMap: Object.fromEntries(metricsMapState)    
             }
             console.log(user)
-            api.post("/users", user)
+
+           
         },
         [metricsMapState]
         ) 

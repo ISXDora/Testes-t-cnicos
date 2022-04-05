@@ -108,7 +108,7 @@ export class CreateUserService {
            await repoPressureSystolic.save(pressureSystolics)
 
         
-        return //user;
+        return user;
     
     }
 }
