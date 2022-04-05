@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import {useUser} from '../contexts/user'
 import { Aside, ButtonForm, Container, ContainerForm, ContentForm, ContentInputHours, GroupButtonsHoursSelected, HeaderForm, Main, MainWrapper, VetorImgWrapper } from '../styles/Home';
 import {ContentMetric, InputMetrics, ContainerMetrics} from '../components/CardMetrics/styles'
 import { useForm, SubmitHandler} from "react-hook-form";
@@ -12,6 +13,7 @@ import ImgPressure from '../assets/images/pressao-arterial.svg'
 import ImgBpm from '../assets/images/001-heart-rate 1.svg'
 import { number } from 'yup';
 import { appendFile } from 'fs';
+import { UserProvider } from '../contexts/user';
 
 
 type Inputs ={
@@ -38,6 +40,7 @@ export function Home(){
     const [divShow, setdivShow] = useState(false);
     const [selectedTime, setSelectedTime] = useState('') 
     const [metricsMapState, setMetricsMapState] =  useState<Map<string, Metric>>(new Map<string, Metric>())
+    const {create} = useUser() 
 
    
     const {  register, handleSubmit, getValues, setValue, formState: { errors } } = useForm<Inputs>();
@@ -60,16 +63,9 @@ export function Home(){
     },[])
 
     const createUser = useCallback(
-        (data) => {
-            const user = {
-                name: data.name,
-                birthDate: data.birthDate,
-                measurementDate: data.measurementDate,
-                metricsMap: Object.fromEntries(metricsMapState)    
-            }
-            console.log(user)
-
-           
+        (data) => { 
+            data.metricsMap= metricsMapState; 
+            create(data)  
         },
         [metricsMapState]
         ) 
