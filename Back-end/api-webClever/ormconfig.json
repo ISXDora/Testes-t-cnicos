@@ -6,5 +6,8 @@
     "password": "Bp%Fu#K6",
     "database": "webcleaver",
     "entities": ["src/entities/**/*.ts"],
-    "migrations": ["src/db/migrations/*.ts"]
+    "migrations": ["src/db/migrations/*.ts"],
+    "cli": {
+        "migrationsDir": "./src/db/migrations/"
+      }
 }

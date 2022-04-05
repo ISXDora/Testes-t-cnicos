@@ -1,7 +1,9 @@
 import { json } from "express";
 import { getRepository, InsertValuesMissingError } from "typeorm";
 import { Bpm } from "../entities/Bpm";
+import { Diastolic_Pressure } from "../entities/Diastolic_pressure";
 import { Health_Metric } from "../entities/Health_metrics";
+import { Systolic_Pressure } from "../entities/Systolic_pressure";
 import { User } from "../entities/User"
 type MetricRequest ={
     bpm: string;
@@ -21,6 +23,8 @@ export class CreateUserService {
         let newArrayMetrics = Object.entries(metricsMap)
 
         let metricMapResult = new Map(newArrayMetrics);
+
+         /*------------------------User----------------------------*/
               
          const repo = getRepository(User);
 
@@ -45,21 +49,32 @@ export class CreateUserService {
 
          /*------------------------Bpm----------------------------*/
 
-        const repoBpm = getRepository(Bpm);
          if (!await repoHealth.findOne(healthReturn.id)){
             return new Error("Health metrics not found!")
          }
+        const repoBpm = getRepository(Bpm);
 
-        const bpms: Array<any> = new Array();
+        const repoPressureDiastolic = getRepository(Diastolic_Pressure);
+
+        const repoPressureSystolic = getRepository(Systolic_Pressure);
+        
+
+        const bpms: Array<Bpm> = new Array();
+        const pressureDiastolics: Array<Diastolic_Pressure> = new Array();
+        const pressureSystolics: Array<Systolic_Pressure> = new Array();
         metricMapResult.forEach((metric, hourKey)=> {
 
             console.log(metric)
             console.log('hour', hourKey)
 
-            
-            if(metric.bpm){
-                
-                const splitedHour = hourKey.split(':')
+            let splitedHour = []
+
+            if(hourKey){
+
+                splitedHour = hourKey.split(':')
+            }
+
+            if(metric.bpm){         
                 const bpm = repoBpm.create({
                     health_metrics_id: healthReturn.id,
                     value: metric.bpm,
@@ -68,21 +83,31 @@ export class CreateUserService {
                 bpms.push(bpm)
                     
             }
+            if(metric.pressureDiastolic){
+                const pressureDiastolic = repoPressureDiastolic.create({
+                    health_metrics_id: healthReturn.id,
+                    value: metric.pressureDiastolic,
+                    hour: new Date(0, 0, 0, Number(splitedHour[0]), Number(splitedHour[1]), 0)
+                      })
+                pressureDiastolics.push(pressureDiastolic)
+                    
+            }
+            if(metric.pressureSystolic){
+                const pressureSystolic = repoPressureSystolic.create({
+                    health_metrics_id: healthReturn.id,
+                    value: metric.pressureSystolic,
+                    hour: new Date(0, 0, 0, Number(splitedHour[0]), Number(splitedHour[1]), 0)
+                      })
+                pressureSystolics.push(pressureSystolic)
+                    
+            }
         })
              
-          const bpmReturn =  await repoBpm.save(bpms)
-
-        // for (let item of valueBpm){
-            
-        //    const bpm = repoBpm.create({
-        //        value : item,
-        //        health_metrics_id: healthReturn.id
-        //    })
-        // }
-
+           await repoBpm.save(bpms)
+           await repoPressureDiastolic.save(pressureDiastolics)
+           await repoPressureSystolic.save(pressureSystolics)
 
         
-
         return //user;
     
     }
