@@ -1,31 +1,34 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { AppProvider } from './contexts';
 import { GlobalStyles } from './styles/Global';
 import { Home } from './views/Home';
+import { Graphics } from './views/Graphics';
+import history from './services/history';
 
 
 function App() {
+  
   return (
     <AppProvider>
-      
-      <GlobalStyles/>
-      <Home />
-      
+        <GlobalStyles/>
+        <Router >
+            <Routes>
+              <Route path="/" element={<Home/>} />
+              <Route path="/graphics" element={<Graphics/>}/>
+            </Routes>
+      </Router>
     </AppProvider>
   );
 }
 
+
 export default App;
 
 
-// <BrowserRouter>
-//     <Routes>
-//       <Route path="/" element={<App />} />
-//       <Route path="expenses" element={<Expenses />} />
-//       <Route path="invoices" element={<Invoices />} />
-//     </Routes>
-//   </BrowserRouter>,
+    // <AppProvider>
+      
+    //   <GlobalStyles/>
+    //   <Home />
+      
+    // </AppProvider>

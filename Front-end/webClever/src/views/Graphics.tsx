@@ -14,7 +14,14 @@ import ImgBpm from '../assets/images/001-heart-rate 1.svg'
 
 
 
-export function Home(){
+export function Graphics(){
+    const {listUserMetrics, user} = useUser() 
+
+    useEffect(()=>{
+        console.log(user)
+        if(user)
+        listUserMetrics(user)
+    },[])
 
     return(
         <Container>
@@ -30,16 +37,12 @@ export function Home(){
                     <ContainerForm>
                         <HeaderForm>
                                 
-                            <h2>Diário de saúde</h2>
-                            <p>Crie o seu relatório diário de saúde</p>
+                            <h2>Gráficos de saúde</h2>
+
                         </HeaderForm>
                         <ContentForm>
-               
+                                           
                         </ContentForm>
-                            <ButtonForm
-                                type="submit"
-                                form="form-create"
-                            >Gerar diário de saúde</ButtonForm>
                     </ContainerForm>
                 </MainWrapper>
             </Main>

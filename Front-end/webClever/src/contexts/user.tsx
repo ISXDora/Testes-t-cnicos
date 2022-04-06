@@ -9,6 +9,7 @@ type Metric ={
 
 interface User {
     name: string;
+    id?: string;
     birthDate: string;
     measurementDate: string;
     metricsMap: Map<string, Metric>
@@ -45,8 +46,12 @@ export const UserProvider:React.FC=({children})=>{
 
     },[])
 
-    const listUserMetrics = useCallback(async(user: User)=>{
-        console.log(user)
+    const listUserMetrics = useCallback(async(user: User )=>{
+    
+            const userMetrics = await api.get<any>("/user ", {params: {id: user.id}})
+            console.log(userMetrics)
+        
+
     },[])
 
     return (
