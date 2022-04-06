@@ -13,7 +13,7 @@ export class Diastolic_Pressure {
     @Column()
     health_metrics_id: string;
 
-    @ManyToOne(() => Health_Metric)
+    @ManyToOne(() => Health_Metric, health_metric => health_metric.diastolics_pressure)
     @JoinColumn({name: "health_metrics_id"})
     metric: Health_Metric;
 
@@ -23,3 +23,4 @@ export class Diastolic_Pressure {
     @Column('time')
     hour: Date;
 }
+

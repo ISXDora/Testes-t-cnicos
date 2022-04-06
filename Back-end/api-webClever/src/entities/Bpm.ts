@@ -13,7 +13,7 @@ export class Bpm {
     @Column()
     health_metrics_id: string;
 
-    @ManyToOne(() => Health_Metric)
+    @ManyToOne(() => Health_Metric, health_metric => health_metric.bpms )
     @JoinColumn({name: "health_metrics_id"})
     metric: Health_Metric;
 
@@ -23,3 +23,4 @@ export class Bpm {
     @Column('time')
     hour: Date;
 }
+
