@@ -14,6 +14,7 @@ import ImgBpm from '../assets/images/001-heart-rate 1.svg'
 import { number } from 'yup';
 import { appendFile } from 'fs';
 import { UserProvider } from '../contexts/user';
+import { createSearchParams, useNavigate, useParams } from 'react-router-dom';
 
 
 type Inputs ={
@@ -40,7 +41,13 @@ export function Home(){
     const [divShow, setdivShow] = useState(false);
     const [selectedTime, setSelectedTime] = useState('') 
     const [metricsMapState, setMetricsMapState] =  useState<Map<string, Metric>>(new Map<string, Metric>())
-    const {create} = useUser() 
+    const {create, user} = useUser() 
+
+
+    let navigate = useNavigate();
+    
+
+    
 
    
     const {  register, handleSubmit, getValues, setValue, formState: { errors } } = useForm<Inputs>();
@@ -62,10 +69,14 @@ export function Home(){
         setSelectedTime("02:00")
     },[])
 
-    const createUser = useCallback(
-        (data) => { 
+    const createUser = useCallback(async (data) => { 
             data.metricsMap= metricsMapState; 
-            create(data)  
+            await create(data)
+            if(user && user.id){
+
+                let params = {id: user.id};
+                navigate({pathname: '/Graphics', search:`?${createSearchParams(params)}`})
+            }
         },
         [metricsMapState]
         ) 
@@ -207,6 +218,9 @@ export function Home(){
                                         type="number"
                                         />
                                 </ContentMetric>
+
+                                </ContainerMetrics>}
+                                </form>
                                 <button
                                     
                                     onClick={toBackHour}
@@ -214,10 +228,8 @@ export function Home(){
 
                                 <button
                                     onClick={nextHour}
-                                >Próximo</button>
-
-                                </ContainerMetrics>}
-                                </form>
+                                >Próximo
+                                </button>
                         </ContentForm>
                             <ButtonForm
                                 type="submit"

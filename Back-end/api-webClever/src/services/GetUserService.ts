@@ -15,7 +15,8 @@ export class GetUserService {
         },
         )
 
-        
+        console.log(id)
+        console.log(user)
 
 
        

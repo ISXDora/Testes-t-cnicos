@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
+import { UserData } from "../entities/entities";
 import { api } from "../services/api";
 
 type Metric ={
@@ -17,10 +18,12 @@ interface User {
 
 interface UserContextData {
     create: (user:User) => Promise<void>;
-    listUserMetrics: (user:User) => Promise<any>
+    listUserMetrics: (id:string) => Promise<UserData[]>
     user?: User;
 
 }
+
+
 
 const UserContext = createContext<UserContextData>({}as UserContextData)
 
@@ -38,7 +41,7 @@ export const UserProvider:React.FC=({children})=>{
         }
         const newUser = await api.post<User>("/users", user);
 
-        console.log(newUser)
+        
         if(newUser){
             setUser(newUser.data);
         }
@@ -46,11 +49,11 @@ export const UserProvider:React.FC=({children})=>{
 
     },[])
 
-    const listUserMetrics = useCallback(async(user: User )=>{
+    const listUserMetrics = useCallback(async( id:string )=>{
     
-            const userMetrics = await api.get<any>("/user ", {params: {id: user.id}})
-            console.log(userMetrics)
-        
+            const userMetrics = await api.get<any>(`/user/${id}`)
+      
+            return userMetrics.data        
 
     },[])
 

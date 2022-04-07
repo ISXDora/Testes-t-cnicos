@@ -64,9 +64,7 @@ export class CreateUserService {
         const pressureSystolics: Array<Systolic_Pressure> = new Array();
         metricMapResult.forEach((metric, hourKey)=> {
 
-            console.log(metric)
-            console.log('hour', hourKey)
-
+         
             let splitedHour = []
 
             if(hourKey){

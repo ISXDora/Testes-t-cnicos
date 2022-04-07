@@ -17,7 +17,7 @@ const routes = Router()
 
 routes.post('/users', new CreateUserController().handle) 
 routes.get('/users', new GetAllUsersController().handle) 
-routes.get('/users/:id', new GetUserController().handle) 
+routes.get('/user/:id', new GetUserController().handle) 
 
 //Health Metrics Route
 
