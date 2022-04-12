@@ -3,17 +3,12 @@ import {useUser} from '../contexts/user'
 import { Aside, ButtonForm, Container, ContainerForm, ContentForm, ContentInputHours, GroupButtonsHoursSelected, HeaderForm, Main, MainWrapper, VetorImgWrapper } from '../styles/Home';
 import {ContentMetric, InputMetrics, ContainerMetrics} from '../components/CardMetrics/styles'
 import { useForm, SubmitHandler} from "react-hook-form";
-import {api} from '../services/api'
 import { Input } from "../components/input/Input";
 import { ButtonSelectedHours } from "../components/Button/styles";
 import { ItemsForm } from "../components/itemsForm/ItemsForm";
-
 import ImageLogo from "../assets/images/dark.svg";
 import ImgPressure from '../assets/images/pressao-arterial.svg'
 import ImgBpm from '../assets/images/001-heart-rate 1.svg'
-import { number } from 'yup';
-import { appendFile } from 'fs';
-import { UserProvider } from '../contexts/user';
 import { createSearchParams, useNavigate, useParams } from 'react-router-dom';
 
 
